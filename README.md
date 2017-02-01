@@ -11,14 +11,13 @@ mvn spring-boot:run
 the applcation responds with:
 
 ```
-curl -i localhost:8080/users -HAccept:application/hal+json
+curl -i localhost:8080/exception -HAccept:application/hal+json
 HTTP/1.1 200
-X-Application-Context: application
 Content-Type: application/hal+json;charset=UTF-8
 Transfer-Encoding: chunked
-Date: Mon, 30 Jan 2017 12:52:21 GMT
+Date: Wed, 01 Feb 2017 06:23:45 GMT
 
-[{"links":[{"rel":"self","href":"http://localhost:8080/users/foo"}]}]
+{"links":[{"rel":"self","href":"http://google.de"}],"message":"Foo"}
 ```
 
 This is not valid HAL!
@@ -27,12 +26,12 @@ But if `@EnableHypermediaSupport(type = HAL)` is applied in `src/main/java/de/mv
 (remove comment in line 20) the application responds correctly with:
 
 ```
-curl -i localhost:8080/users -HAccept:application/hal+json
-HTTP/1.1 200
-X-Application-Context: application
+curl -i localhost:8080/exception -HAccept:application/hal+json
+HTTP/1.1 400
 Content-Type: application/hal+json;charset=UTF-8
 Transfer-Encoding: chunked
-Date: Mon, 30 Jan 2017 12:55:03 GMT
+Date: Wed, 01 Feb 2017 06:29:51 GMT
+Connection: close
 
-[{"_links":{"self":{"href":"http://localhost:8080/users/foo"}}}]
+{"_links":{"self":{"href":"http://google.de"}},"message":"Foo"}
 ```
