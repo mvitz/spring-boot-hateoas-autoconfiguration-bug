@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collections;
-import java.util.List;
 
 import static org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType.HAL;
 
@@ -50,8 +50,8 @@ public class SpringHateoasApplication {
     UserResourceAssembler userResourceAssembler = new UserResourceAssembler();
 
     @RequestMapping
-    public List<UserResource> users() {
-      return Collections.singletonList(user("foo"));
+    public Resources<UserResource> users() {
+      return new Resources<>(Collections.singletonList(user("foo")));
     }
 
     @RequestMapping("/{name}")
