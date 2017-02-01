@@ -9,13 +9,16 @@ import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collections;
+import java.util.List;
 
+import static java.util.stream.Collectors.toList;
 import static org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType.HAL;
 
 @SpringBootApplication
@@ -53,13 +56,16 @@ public class SpringHateoasApplication {
     UserResourceAssembler userResourceAssembler = new UserResourceAssembler();
 
     @RequestMapping
-    public Resources<UserResource> users() {
-      return new Resources<>(Collections.singletonList(user("foo")));
+    public ResponseEntity<Resources<UserResource>> users() {
+      final List<User> users = Collections.singletonList(new User("foo"));
+      final List<UserResource> representations =
+          users.stream().map(userResourceAssembler::toResource).collect(toList());
+      return ResponseEntity.ok().body(new Resources<>(representations));
     }
 
     @RequestMapping("/{name}")
-    public UserResource user(@PathVariable("name") String name) {
-      return userResourceAssembler.toResource(new User(name));
+    public ResponseEntity<UserResource> user(@PathVariable("name") String name) {
+      return ResponseEntity.ok().body(userResourceAssembler.toResource(new User(name)));
     }
   }
 
