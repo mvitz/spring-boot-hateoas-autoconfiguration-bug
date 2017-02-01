@@ -1,5 +1,7 @@
 package de.mvitz.spring.hateoas.server;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -26,6 +28,7 @@ public class SpringHateoasApplication {
   }
 
   static class UserResource extends ResourceSupport {
+    @JsonProperty("name")
     String name;
     public UserResource(User user) { this.name = user.name; }
   }
