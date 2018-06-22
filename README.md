@@ -1,6 +1,11 @@
 # Spring Boot HATEOAS AutoConfiguration Bug
 
-Small project to show a possible bug.
+**Note:** This issue is fixed in Spring Boot 2.0.3 with Hateoas 0.25.0!
+
+See https://github.com/spring-projects/spring-boot/issues/8174
+
+
+## Problem
 
 After starting the application with
 
